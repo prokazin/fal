@@ -8,25 +8,40 @@
 </head>
 <body>
   <div class="container">
-    <h1>Caps Clicker</h1>
-    <div class="stats">
-      <div>Капсы: <span id="caps">0</span></div>
-      <div>Капсы/сек: <span id="cps">0.0</span></div>
-      <div>Радиация: <span id="radiation">0%</span></div>
+
+    <!-- Основной экран с Nuka-Cola -->
+    <div id="main-screen" class="screen active">
+      <h1>Caps Clicker</h1>
+      <div class="stats">
+        <div>Капсы: <span id="caps">0</span></div>
+        <div>Капсы/сек: <span id="cps">0.0</span></div>
+        <div>Радиация: <span id="radiation">0%</span></div>
+      </div>
+
+      <button id="clickButton" class="big-button">
+        <img src="https://via.placeholder.com/300?text=Nuka-Cola" alt="Nuka-Cola" class="click-image">
+        <div class="click-text">Клик!</div>
+      </button>
     </div>
 
-    <button id="clickButton" class="big-button">
-      <img src="https://via.placeholder.com/200?text=Nuka-Cola" alt="Nuka-Cola" class="click-image">
-      <div class="click-text">Клик!</div>
-    </button>
-
-    <div class="tabs">
-      <button class="tab-button active" data-tab="buildings">Здания</button>
-      <button class="tab-button" data-tab="upgrades">Улучшения</button>
+    <!-- Экран Здания -->
+    <div id="buildings-screen" class="screen">
+      <h2>Здания</h2>
+      <div id="buildings"></div>
     </div>
 
-    <div id="buildings" class="tab-content active"></div>
-    <div id="upgrades" class="tab-content"></div>
+    <!-- Экран Улучшения -->
+    <div id="upgrades-screen" class="screen">
+      <h2>Улучшения</h2>
+      <div id="upgrades"></div>
+    </div>
+
+    <!-- Нижние вкладки -->
+    <div class="bottom-tabs">
+      <button class="tab-button" data-screen="buildings-screen">Здания</button>
+      <button class="tab-button big-middle" data-screen="main-screen">Крышки</button>
+      <button class="tab-button" data-screen="upgrades-screen">Улучшения</button>
+    </div>
 
     <div id="notification" class="notification"></div>
   </div>
