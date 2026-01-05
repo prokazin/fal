@@ -1,0 +1,88 @@
+body {
+  background-color: #2a2a2a; /* Тёмный постапокалиптический фон */
+  color: #00ff00; /* Зелёный терминалный цвет */
+  font-family: 'Courier New', monospace;
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h1, h2 {
+  color: #ffd700; /* Золотой для заголовков */
+}
+
+.stats {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.big-button {
+  background-color: #4b4b4b;
+  border: 2px solid #00ff00;
+  padding: 20px;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.big-button:hover {
+  transform: scale(1.05);
+}
+
+.click-image {
+  width: 150px;
+  height: 150px;
+}
+
+.buildings-section {
+  margin-top: 30px;
+}
+
+.building {
+  background-color: #3a3a3a;
+  border: 1px solid #00ff00;
+  padding: 10px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.building button {
+  background-color: #00ff00;
+  color: #000;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.building button:disabled {
+  background-color: #ff0000;
+  cursor: not-allowed;
+}
+
+.events-section {
+  margin-top: 30px;
+  color: #ff4500; /* Оранжевый для событий */
+}
+
+#eventLog {
+  height: 150px;
+  overflow-y: auto;
+  border: 1px solid #00ff00;
+  padding: 10px;
+  text-align: left;
+}
+
+#saveButton, #resetButton {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #00ff00;
+  color: #000;
+  border: none;
+  cursor: pointer;
+}
