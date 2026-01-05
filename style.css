@@ -162,6 +162,27 @@ h2 {
   cursor: not-allowed;
 }
 
+.active-upgrades {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.active-upgrade-button {
+  padding: 10px 20px;
+  background-color: #ffd700;
+  color: #000;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 5px;
+  border-radius: 8px;
+}
+
+.active-upgrade-button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
 .notification {
   position: fixed;
   top: 20px;
