@@ -175,6 +175,11 @@ h2 {
   display: none;
 }
 
+.upgrade-cost {
+  font-size: 15px;
+  color: #ffd700;
+}
+
 .upgrade button {
   padding: 10px 16px;
   background-color: #00ff00;
