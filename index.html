@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caps Clicker: Пустошь ждёт</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Caps Clicker: Пустошь ждёт</h1>
+    <div class="stats">
+      <div>Капсы: <span id="caps">0</span></div>
+      <div>Капсы в секунду: <span id="cps">0.0</span></div>
+      <div>Радиация: <span id="radiation">0%</span></div>
+    </div>
+
+    <button id="clickButton" class="big-button">
+      <img src="https://via.placeholder.com/150?text=Nuka-Cola" alt="Nuka-Cola Bottle" class="click-image">
+      <div>Кликни за капсы!</div>
+    </button>
+
+    <div class="buildings-section">
+      <h2>Здания и улучшения</h2>
+      <div id="buildings"></div>
+    </div>
+
+    <div class="events-section">
+      <h2>События в Пустоши</h2>
+      <div id="eventLog"></div>
+    </div>
+
+    <button id="saveButton">Сохранить прогресс</button>
+    <button id="resetButton">Сбросить игру</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
