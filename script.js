@@ -56,22 +56,50 @@ let autoClickerInterval = null;
 let freePurchaseChance = 0;
 let lostCaps = 0; // Для регена
 
-// Загрузка игры
+// Загрузка игры с проверкой совместимости
 function loadGame() {
   const saved = localStorage.getItem('capsClicker');
   if (saved) {
     const data = JSON.parse(saved);
-    caps = data.caps || 0;
-    buildings = data.buildings || buildings;
-    upgrades = data.upgrades || upgrades;
-    clickPower = data.clickPower || 1;
-    globalMultiplier = data.globalMultiplier || 1;
-    radiationResistance = data.radiationResistance || 1;
-    regenRate = data.regenRate || 0;
-    raiderLossReduction = data.raiderLossReduction || 1;
-    bloodyMessChance = data.bloodyMessChance || 0;
-    freePurchaseChance = data.freePurchaseChance || 0;
-    lostCaps = data.lostCaps || 0;
+    caps = Number(data.caps) || 0;
+    buildings = data.buildings || buildings.map(b => ({ ...b }));
+    upgrades = data.upgrades || upgrades.map(u => ({ ...u }));
+    clickPower = Number(data.clickPower) || 1;
+    globalMultiplier = Number(data.globalMultiplier) || 1;
+    radiationResistance = Number(data.radiationResistance) || 1;
+    regenRate = Number(data.regenRate) || 0;
+    raiderLossReduction = Number(data.raiderLossReduction) || 1;
+    bloodyMessChance = Number(data.bloodyMessChance) || 0;
+    freePurchaseChance = Number(data.freePurchaseChance) || 0;
+    lostCaps = Number(data.lostCaps) || 0;
+
+    // Проверка совместимости для buildings
+    buildings.forEach(b => {
+      b.multiplier = Number(b.multiplier) || 1;
+      b.production = Number(b.production) || 0;
+      b.cost = Number(b.cost) || b.baseCost;
+      b.count = Number(b.count) || 0;
+      if (b.name === 'Супер-Здание Enclave') {
+        b.unlocked = b.unlocked ?? false;
+      }
+    });
+
+    // Проверка совместимости для upgrades
+    upgrades.forEach(u => {
+      u.purchased = u.purchased ?? false;
+      u.cost = Number(u.cost) || 0;
+      if (u.effect === 'quantumBoost') {
+        u.active = u.active ?? false;
+      }
+    });
+
+    // Применить эффекты купленных улучшений заново для совместимости
+    upgrades.forEach(u => {
+      if (u.purchased) {
+        applyUpgradeEffect(u.effect);
+      }
+    });
+
     recalculateCPS();
     renderActiveUpgrades();
   }
@@ -101,9 +129,9 @@ function showNotification(msg) {
 
 // Обновление UI
 function updateUI() {
-  capsEl.textContent = Math.floor(caps);
-  cpsEl.textContent = cps.toFixed(1);
-  radiationEl.textContent = radiation.toFixed(0) + '%';
+  capsEl.textContent = isNaN(caps) ? 0 : Math.floor(caps);
+  cpsEl.textContent = isNaN(cps) ? '0.0' : cps.toFixed(1);
+  radiationEl.textContent = isNaN(radiation) ? '0%' : radiation.toFixed(0) + '%';
 
   renderBuildings();
   renderUpgrades();
@@ -264,8 +292,12 @@ function applyUpgradeEffect(effect) {
 function recalculateCPS() {
   cps = 0;
   buildings.forEach(b => {
-    cps += b.count * b.production * globalMultiplier * b.multiplier;
+    const add = b.count * b.production * globalMultiplier * b.multiplier;
+    if (!isNaN(add)) {
+      cps += add;
+    }
   });
+  if (isNaN(cps)) cps = 0;
 }
 
 // Активация Quantum
@@ -278,7 +310,10 @@ function activateQuantum() {
     setTimeout(() => {
       clickPower /= 2;
       showNotification('Quantum закончился.');
-      setTimeout(() => u.active = false, u.cooldown - 30000); // Кулдаун после эффекта
+      setTimeout(() => {
+        u.active = false;
+        renderActiveUpgrades();
+      }, u.cooldown - 30000);
     }, 30000);
   }
 }
@@ -291,6 +326,7 @@ clickButton.addEventListener('click', () => {
     showNotification('Критический клик! x10');
   }
   caps += add;
+  if (isNaN(caps)) caps = 0;
   updateUI();
   saveGame();
 });
@@ -307,12 +343,15 @@ document.querySelectorAll('.tab-button').forEach(btn => {
 
 // Автоматическое производство и события
 setInterval(() => {
-  caps += cps / 10;
+  let add = cps / 10;
+  if (isNaN(add)) add = 0;
+  caps += add;
   if (regenRate > 0 && lostCaps > 0) {
     const regen = lostCaps * regenRate / 10;
     caps += regen;
     lostCaps -= regen;
   }
+  if (isNaN(caps)) caps = 0;
   updateUI();
 
   // Радиационная буря
@@ -320,6 +359,7 @@ setInterval(() => {
     radiation = Math.min(100, radiation + 20);
     const reduction = 0.5 * radiationResistance;
     cps *= (1 - reduction);
+    if (isNaN(cps)) cps = 0;
     showNotification('Радиационная буря!');
     setTimeout(() => {
       recalculateCPS();
