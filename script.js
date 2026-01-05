@@ -15,26 +15,19 @@ let buildings = [
 ];
 
 let upgrades = [
-  // Улучшения клика — видимы сразу
-  { name: 'Power Fist', desc: 'Клик +5 капсов', cost: 500, purchased: false, effect: 'clickBoost5', category: 'click' },
-  { name: 'Nuka-Cola Quantum', desc: 'Клик x2 на 30 сек (кулдаун 5 мин)', cost: 2000, purchased: false, effect: 'quantumBoost', category: 'click', cooldown: 300000, active: false },
-  { name: 'Bloody Mess', desc: 'Шанс 10% критического клика (x10 капсов)', cost: 5000, purchased: false, effect: 'bloodyMess', category: 'click' },
-
-  // Улучшения зданий — видимы сразу
-  { name: 'Intense Training', desc: '+10% ко всем зданиям', cost: 10000, purchased: false, effect: 'globalBoost10', category: 'buildings' },
-  { name: 'Scrounger', desc: 'Брамины и фермы +25%', cost: 15000, purchased: false, effect: 'scrounger', category: 'buildings' },
-  { name: 'Robotics Expert', desc: 'Турели и реактор +50%', cost: 50000, purchased: false, effect: 'robotics', category: 'buildings' },
-  { name: 'Nuka Chemist', desc: '+20% ко всем зданиям (спец. рецепты)', cost: 100000, purchased: false, effect: 'globalBoost20', category: 'buildings' },
-
-  // Защита и выживание — видимы сразу
-  { name: 'Rad Resistance', desc: 'Радиационные бури слабее на 50%', cost: 20000, purchased: false, effect: 'radResist50', category: 'survival' },
-  { name: 'Life Giver', desc: 'Регенерирует 0.5% потерянных капсов в сек', cost: 50000, purchased: false, effect: 'lifeGiver', category: 'survival' },
-  { name: 'Adamantium Skeleton', desc: 'Снижает потери от рейдеров на 50%', cost: 100000, purchased: false, effect: 'adamantium', category: 'survival' },
-
-  // Редкие/дорогие — скрытые, появляются при выполнении условий
-  { name: 'Mister House Alliance', desc: 'Автокликер (1 клик/сек)', cost: 1000000, purchased: false, effect: 'autoClicker', category: 'rare', unlockCondition: () => caps >= 1000000 || getTotalBuildings() >= 20 },
-  { name: 'Yes Man Independence', desc: 'Шанс случайных бесплатных покупок', cost: 5000000, purchased: false, effect: 'freePurchases', category: 'rare', unlockCondition: () => caps >= 5000000 || getTotalBuildings() >= 50 },
-  { name: 'Brotherhood Tech', desc: 'Разблокирует супер-здание', cost: 10000000, purchased: false, effect: 'unlockSuper', category: 'rare', unlockCondition: () => caps >= 10000000 || getTotalBuildings() >= 100 }
+  { name: 'Power Fist', desc: 'Клик +5 капсов', cost: 500, purchased: false, effect: 'clickBoost5', icon: 'https://images.fallout.wiki/b/bb/POWERFIST.png', condition: 'Доступно сразу' },
+  { name: 'Nuka-Cola Quantum', desc: 'Клик x2 на 30 сек (кулдаун 5 мин)', cost: 2000, purchased: false, effect: 'quantumBoost', icon: 'https://i.etsystatic.com/11517246/r/il/fc1096/3450648896/il_1080xN.3450648896_7xm1.jpg', condition: 'Доступно сразу', cooldown: 300000, active: false },
+  { name: 'Bloody Mess', desc: 'Шанс 10% критического клика (x10)', cost: 5000, purchased: false, effect: 'bloodyMess', icon: 'https://static.wikia.nocookie.net/fallout/images/4/47/Bloody_Mess_trait.png/revision/latest?cb=20130209111301', condition: 'Доступно сразу' },
+  { name: 'Intense Training', desc: '+10% ко всем зданиям', cost: 10000, purchased: false, effect: 'globalBoost10', icon: 'https://static.wikia.nocookie.net/fallout/images/1/14/Agility.png/revision/latest?cb=20101127221637', condition: 'Доступно сразу' },
+  { name: 'Scrounger', desc: 'Брамины и фермы +25%', cost: 15000, purchased: false, effect: 'scrounger', icon: 'https://static.wikia.nocookie.net/fallout/images/e/e7/Fo4_Scrounger.png/revision/latest?cb=20151116170324', condition: 'Доступно сразу' },
+  { name: 'Robotics Expert', desc: 'Турели и реактор +50%', cost: 50000, purchased: false, effect: 'robotics', icon: 'https://static.wikia.nocookie.net/fallout/images/6/64/Robotics_Expert.png/revision/latest?cb=20101126182946', condition: 'Доступно сразу' },
+  { name: 'Nuka Chemist', desc: '+20% ко всем зданиям', cost: 100000, purchased: false, effect: 'globalBoost20', icon: 'https://preview.redd.it/9i5jlgsmeit91.jpg?width=1080&crop=smart&auto=webp&s=9722b6685efcedd4c9e4bd3c0f11f958d0d9e686', condition: 'Доступно сразу' },
+  { name: 'Rad Resistance', desc: 'Радиационные бури слабее на 50%', cost: 20000, purchased: false, effect: 'radResist50', icon: 'https://images.fallout.wiki/6/64/Fo4_Ghoulish.png', condition: 'Доступно сразу' },
+  { name: 'Life Giver', desc: 'Реген 0.5% потерянных капсов/сек', cost: 50000, purchased: false, effect: 'lifeGiver', icon: 'https://static.wikia.nocookie.net/fallout/images/6/60/SlayerFNV.png/revision/latest?cb=20101014195935', condition: 'Доступно сразу' },
+  { name: 'Adamantium Skeleton', desc: 'Потери от рейдеров -50%', cost: 100000, purchased: false, effect: 'adamantium', icon: 'https://static.wikia.nocookie.net/fallout/images/6/67/Adamantium_Skeleton.png/revision/latest?cb=20170425195257', condition: 'Доступно сразу' },
+  { name: 'Mister House Alliance', desc: 'Автокликер (1 клик/сек)', cost: 1000000, purchased: false, effect: 'autoClicker', icon: 'https://i.redd.it/anybody-else-was-shocked-when-they-saw-mr-houses-real-body-v0-t5xjrp7qtoma1.jpg?width=1200&format=pjpg&auto=webp&s=6e3d67d12657eabfcf45f745b7691b8bb4b9e505', condition: '≥ 1 000 000 капсов ИЛИ ≥ 20 зданий' },
+  { name: 'Yes Man Independence', desc: '5% шанс бесплатной покупки', cost: 5000000, purchased: false, effect: 'freePurchases', icon: 'https://images.fallout.wiki/e/e5/FNV_Character_Yes_Man.png', condition: '≥ 5 000 000 капсов ИЛИ ≥ 50 зданий' },
+  { name: 'Brotherhood Tech', desc: 'Разблокирует супер-здание Enclave', cost: 10000000, purchased: false, effect: 'unlockSuper', icon: 'https://logos-world.net/wp-content/uploads/2025/02/Brotherhood-of-Steel-Logo.jpg', condition: '≥ 10 000 000 капсов ИЛИ ≥ 100 зданий' }
 ];
 
 const capsEl = document.getElementById('caps');
@@ -80,7 +73,6 @@ function loadGame() {
     });
 
     upgrades.forEach(u => {
-      u.purchased = u.purchased ?? false;
       if (u.effect === 'quantumBoost') u.active = u.active ?? false;
     });
 
@@ -115,7 +107,7 @@ function updateUI() {
   radiationEl.textContent = isNaN(radiation) ? '0%' : radiation.toFixed(0) + '%';
 
   renderBuildings();
-  renderUpgrades();  // Теперь всегда показывает доступные
+  renderUpgrades();
   renderActiveUpgrades();
 }
 
@@ -130,6 +122,14 @@ function updateActiveTab() {
 
 function getTotalBuildings() {
   return buildings.reduce((total, b) => total + (b.count || 0), 0);
+}
+
+function isUpgradeLocked(u) {
+  if (u.condition === 'Доступно сразу') return false;
+  if (u.name === 'Mister House Alliance') return !(caps >= 1000000 || getTotalBuildings() >= 20);
+  if (u.name === 'Yes Man Independence') return !(caps >= 5000000 || getTotalBuildings() >= 50);
+  if (u.name === 'Brotherhood Tech') return !(caps >= 10000000 || getTotalBuildings() >= 100);
+  return false;
 }
 
 function renderBuildings() {
@@ -154,17 +154,31 @@ function renderUpgrades() {
   upgradesContainer.innerHTML = '';
   upgrades.forEach((upgrade, i) => {
     if (upgrade.purchased) return;
-    // Проверка условия разблокировки для редких
-    if (upgrade.unlockCondition && !upgrade.unlockCondition()) return;
     const div = document.createElement('div');
-    div.className = 'upgrade';
+    div.className = `upgrade ${isUpgradeLocked(upgrade) ? 'locked' : ''}`;
     div.innerHTML = `
-      <div class="upgrade-name">${upgrade.name}</div>
-      <div>${upgrade.desc}</div>
-      <div>Стоимость: ${upgrade.cost}</div>
-      <button ${caps >= upgrade.cost ? '' : 'disabled'}>Купить</button>
+      <img src="${upgrade.icon}" class="upgrade-icon" alt="${upgrade.name}">
+      <div class="upgrade-info">
+        <div class="upgrade-name">${upgrade.name}</div>
+        <div class="upgrade-desc">${upgrade.desc}</div>
+        <div class="upgrade-condition">${upgrade.condition}</div>
+        <div>Стоимость: ${upgrade.cost}</div>
+      </div>
+      <button ${caps >= upgrade.cost && !isUpgradeLocked(upgrade) ? '' : 'disabled'}>Купить</button>
     `;
-    div.querySelector('button').onclick = () => buyUpgrade(i);
+    const conditionEl = div.querySelector('.upgrade-condition');
+    conditionEl.style.display = 'none';
+    div.addEventListener('click', () => {
+      if (conditionEl.style.display === 'none') {
+        conditionEl.style.display = 'block';
+      } else {
+        conditionEl.style.display = 'none';
+      }
+    });
+    div.querySelector('button').onclick = (e) => {
+      e.stopPropagation();
+      buyUpgrade(i);
+    };
     upgradesContainer.appendChild(div);
   });
 }
@@ -189,7 +203,7 @@ function buyBuilding(i) {
 
 function buyUpgrade(i) {
   const u = upgrades[i];
-  if (caps >= u.cost && !u.purchased) {
+  if (caps >= u.cost && !u.purchased && !isUpgradeLocked(u)) {
     caps -= u.cost;
     u.purchased = true;
     applyUpgradeEffect(u.effect);
@@ -204,14 +218,8 @@ function applyUpgradeEffect(effect) {
     case 'clickBoost5': clickPower += 5; break;
     case 'bloodyMess': bloodyMessChance = 0.1; break;
     case 'globalBoost10': globalMultiplier *= 1.1; recalculateCPS(); break;
-    case 'scrounger':
-      buildings[0].multiplier *= 1.25;
-      buildings[1].multiplier *= 1.25;
-      recalculateCPS(); break;
-    case 'robotics':
-      buildings[4].multiplier *= 1.5;
-      buildings[6].multiplier *= 1.5;
-      recalculateCPS(); break;
+    case 'scrounger': buildings[0].multiplier *= 1.25; buildings[1].multiplier *= 1.25; recalculateCPS(); break;
+    case 'robotics': buildings[4].multiplier *= 1.5; buildings[6].multiplier *= 1.5; recalculateCPS(); break;
     case 'globalBoost20': globalMultiplier *= 1.2; recalculateCPS(); break;
     case 'radResist50': radiationResistance *= 0.5; break;
     case 'lifeGiver': regenRate = 0.005; break;
@@ -222,7 +230,7 @@ function applyUpgradeEffect(effect) {
       }
       break;
     case 'freePurchases': freePurchaseChance = 0.05; break;
-    case 'unlockSuper': buildings[8].unlocked = true; break;
+    case 'unlockSuper': buildings[8].unlocked = true; updateUI(); break;
   }
 }
 
@@ -232,6 +240,19 @@ function recalculateCPS() {
     const add = (b.count || 0) * b.production * globalMultiplier * b.multiplier;
     if (!isNaN(add)) cps += add;
   });
+}
+
+function renderActiveUpgrades() {
+  activeUpgradesContainer.innerHTML = '';
+  const quantum = upgrades.find(u => u.effect === 'quantumBoost' && u.purchased);
+  if (quantum) {
+    const btn = document.createElement('button');
+    btn.className = 'active-upgrade-button';
+    btn.textContent = 'Активировать Quantum';
+    btn.onclick = activateQuantum;
+    btn.disabled = quantum.active;
+    activeUpgradesContainer.appendChild(btn);
+  }
 }
 
 function activateQuantum() {
