@@ -47,7 +47,7 @@ function loadGame() {
   updateUI();
 }
 
-// Сохранение (автоматическое)
+// Автосохранение
 function saveGame() {
   const data = {
     caps, buildings, upgrades,
@@ -136,7 +136,7 @@ function buyUpgrade(i) {
       recalculateCPS();
     }
     updateUI();
-    showNotification(`Куплено улучшение: ${u.name}`);
+    showNotification(`Куплено: ${u.name}`);
     saveGame();
   }
 }
@@ -148,20 +148,19 @@ function recalculateCPS() {
   });
 }
 
-// Клик
+// Клик по Nuka-Cola
 clickButton.addEventListener('click', () => {
   caps += clickPower;
   updateUI();
   saveGame();
 });
 
-// Вкладки
+// Переключение экранов
 document.querySelectorAll('.tab-button').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById(btn.dataset.tab).classList.add('active');
+    const target = btn.dataset.screen;
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(target).classList.add('active');
   });
 });
 
@@ -170,7 +169,7 @@ setInterval(() => {
   caps += cps / 10;
   updateUI();
 
-  // Радиационная буря (редко)
+  // Радиационная буря
   if (Math.random() < 0.003) {
     radiation = Math.min(100, radiation + 20);
     const reduction = 0.5 * radiationResistance;
@@ -182,7 +181,7 @@ setInterval(() => {
     }, 15000);
   }
 
-  // Случайные положительные события
+  // Случайные события
   if (Math.random() < 0.005) {
     const bonuses = [
       'Нашёл тайник! +1000 капсов',
