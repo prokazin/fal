@@ -1,88 +1,150 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
-  background-color: #2a2a2a; /* Тёмный постапокалиптический фон */
-  color: #00ff00; /* Зелёный терминалный цвет */
-  font-family: 'Courier New', monospace;
-  text-align: center;
   margin: 0;
-  padding: 20px;
+  padding: 0;
+  background-color: #1e1e1e;
+  color: #00ff00;
+  font-family: 'Courier New', monospace;
+  min-height: 100vh;
+  touch-action: manipulation;
 }
 
 .container {
-  max-width: 800px;
+  max-width: 100%;
+  padding: 10px;
   margin: 0 auto;
 }
 
-h1, h2 {
-  color: #ffd700; /* Золотой для заголовков */
+h1 {
+  font-size: 24px;
+  margin: 10px 0;
+  color: #ffd700;
+  text-align: center;
 }
 
 .stats {
+  text-align: center;
   font-size: 18px;
-  margin-bottom: 20px;
+  margin: 15px 0;
+  line-height: 1.4;
 }
 
 .big-button {
-  background-color: #4b4b4b;
-  border: 2px solid #00ff00;
+  width: 100%;
+  max-width: 300px;
+  margin: 20px auto;
   padding: 20px;
+  background-color: #333;
+  border: 3px solid #00ff00;
+  border-radius: 15px;
   cursor: pointer;
-  transition: transform 0.1s;
+  display: block;
+  transition: transform 0.05s;
 }
 
-.big-button:hover {
-  transform: scale(1.05);
+.big-button:active {
+  transform: scale(0.95);
 }
 
 .click-image {
-  width: 150px;
-  height: 150px;
+  width: 100%;
+  height: auto;
+  max-height: 200px;
+  object-fit: contain;
 }
 
-.buildings-section {
-  margin-top: 30px;
+.click-text {
+  font-size: 20px;
+  margin-top: 10px;
+  font-weight: bold;
 }
 
-.building {
-  background-color: #3a3a3a;
-  border: 1px solid #00ff00;
-  padding: 10px;
-  margin: 10px 0;
+.tabs {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  gap: 10px;
 }
 
-.building button {
+.tab-button {
+  padding: 10px 20px;
+  background-color: #333;
+  border: 2px solid #00ff00;
+  color: #00ff00;
+  font-size: 16px;
+  cursor: pointer;
+  flex: 1;
+  max-width: 200px;
+}
+
+.tab-button.active {
+  background-color: #00ff00;
+  color: #000;
+}
+
+.tab-content {
+  display: none;
+  margin-top: 10px;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.building, .upgrade {
+  background-color: #2a2a2a;
+  border: 1px solid #00ff00;
+  padding: 12px;
+  margin: 8px 5px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.building-name, .upgrade-name {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.building-info {
+  font-size: 14px;
+  color: #aaa;
+}
+
+.building button, .upgrade button {
+  padding: 10px;
   background-color: #00ff00;
   color: #000;
   border: none;
-  padding: 5px 10px;
+  font-weight: bold;
   cursor: pointer;
+  margin-top: 5px;
 }
 
-.building button:disabled {
-  background-color: #ff0000;
+.building button:disabled, .upgrade button:disabled {
+  background-color: #600;
+  color: #aaa;
   cursor: not-allowed;
 }
 
-.events-section {
-  margin-top: 30px;
-  color: #ff4500; /* Оранжевый для событий */
-}
-
-#eventLog {
-  height: 150px;
-  overflow-y: auto;
-  border: 1px solid #00ff00;
-  padding: 10px;
-  text-align: left;
-}
-
-#saveButton, #resetButton {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #00ff00;
+.notification {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 255, 0, 0.9);
   color: #000;
-  border: none;
-  cursor: pointer;
+  padding: 15px 25px;
+  border-radius: 10px;
+  font-weight: bold;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none;
+  max-width: 90%;
+  text-align: center;
 }
