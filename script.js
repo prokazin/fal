@@ -21,13 +21,13 @@ let upgrades = [
   { name: 'Intense Training', desc: '+10% ко всем зданиям', cost: 10000, purchased: false, effect: 'globalBoost10', icon: 'https://static.wikia.nocookie.net/fallout/images/1/14/Agility.png/revision/latest?cb=20101127221637', condition: 'Доступно сразу' },
   { name: 'Scrounger', desc: 'Брамины и фермы +25%', cost: 15000, purchased: false, effect: 'scrounger', icon: 'https://static.wikia.nocookie.net/fallout/images/e/e7/Fo4_Scrounger.png/revision/latest?cb=20151116170324', condition: 'Доступно сразу' },
   { name: 'Robotics Expert', desc: 'Турели и реактор +50%', cost: 50000, purchased: false, effect: 'robotics', icon: 'https://static.wikia.nocookie.net/fallout/images/6/64/Robotics_Expert.png/revision/latest?cb=20101126182946', condition: 'Доступно сразу' },
-  { name: 'Nuka Chemist', desc: '+20% ко всем зданиям', cost: 100000, purchased: false, effect: 'globalBoost20', icon: 'https://preview.redd.it/9i5jlgsmeit91.jpg?width=1080&crop=smart&auto=webp&s=9722b6685efcedd4c9e4bd3c0f11f958d0d9e686', condition: 'Доступно сразу' },
+  { name: 'Nuka Chemist', desc: '+20% ко всем зданиям', cost: 100000, purchased: false, effect: 'globalBoost20', icon: 'https://static.wikia.nocookie.net/fallout/images/5/52/Nuka-Cola_Corporation.png/revision/latest?cb=20190921062207', condition: 'Доступно сразу' },
   { name: 'Rad Resistance', desc: 'Радиационные бури слабее на 50%', cost: 20000, purchased: false, effect: 'radResist50', icon: 'https://images.fallout.wiki/6/64/Fo4_Ghoulish.png', condition: 'Доступно сразу' },
   { name: 'Life Giver', desc: 'Реген 0.5% потерянных капсов/сек', cost: 50000, purchased: false, effect: 'lifeGiver', icon: 'https://static.wikia.nocookie.net/fallout/images/6/60/SlayerFNV.png/revision/latest?cb=20101014195935', condition: 'Доступно сразу' },
   { name: 'Adamantium Skeleton', desc: 'Потери от рейдеров -50%', cost: 100000, purchased: false, effect: 'adamantium', icon: 'https://static.wikia.nocookie.net/fallout/images/6/67/Adamantium_Skeleton.png/revision/latest?cb=20170425195257', condition: 'Доступно сразу' },
-  { name: 'Mister House Alliance', desc: 'Автокликер (1 клик/сек)', cost: 1000000, purchased: false, effect: 'autoClicker', icon: 'https://i.redd.it/anybody-else-was-shocked-when-they-saw-mr-houses-real-body-v0-t5xjrp7qtoma1.jpg?width=1200&format=pjpg&auto=webp&s=6e3d67d12657eabfcf45f745b7691b8bb4b9e505', condition: '≥ 1 000 000 капсов ИЛИ ≥ 20 зданий' },
+  { name: 'Mister House Alliance', desc: 'Автокликер (1 клик/сек)', cost: 1000000, purchased: false, effect: 'autoClicker', icon: 'https://images.fallout.wiki/9/9a/FNV_Mr_House_Screen.png', condition: '≥ 1 000 000 капсов ИЛИ ≥ 20 зданий' },
   { name: 'Yes Man Independence', desc: '5% шанс бесплатной покупки', cost: 5000000, purchased: false, effect: 'freePurchases', icon: 'https://images.fallout.wiki/e/e5/FNV_Character_Yes_Man.png', condition: '≥ 5 000 000 капсов ИЛИ ≥ 50 зданий' },
-  { name: 'Brotherhood Tech', desc: 'Разблокирует супер-здание Enclave', cost: 10000000, purchased: false, effect: 'unlockSuper', icon: 'https://logos-world.net/wp-content/uploads/2025/02/Brotherhood-of-Steel-Logo.jpg', condition: '≥ 10 000 000 капсов ИЛИ ≥ 100 зданий' }
+  { name: 'Brotherhood Tech', desc: 'Разблокирует супер-здание Enclave', cost: 10000000, purchased: false, effect: 'unlockSuper', icon: 'https://upload.wikimedia.org/wikipedia/commons/d/d5/Fallout_Brotherhood_of_Steel_logo.png', condition: '≥ 10 000 000 капсов ИЛИ ≥ 100 зданий' }
 ];
 
 const capsEl = document.getElementById('caps');
@@ -154,25 +154,24 @@ function renderUpgrades() {
   upgradesContainer.innerHTML = '';
   upgrades.forEach((upgrade, i) => {
     if (upgrade.purchased) return;
+    const locked = isUpgradeLocked(upgrade);
     const div = document.createElement('div');
-    div.className = `upgrade ${isUpgradeLocked(upgrade) ? 'locked' : ''}`;
+    div.className = `upgrade ${locked ? 'locked' : ''}`;
     div.innerHTML = `
-      <img src="${upgrade.icon}" class="upgrade-icon" alt="${upgrade.name}">
+      <img src="${upgrade.icon}" class="upgrade-icon" alt="${upgrade.name}" onerror="this.src='https://via.placeholder.com/80?text=?';">
       <div class="upgrade-info">
         <div class="upgrade-name">${upgrade.name}</div>
         <div class="upgrade-desc">${upgrade.desc}</div>
         <div class="upgrade-condition">${upgrade.condition}</div>
-        <div>Стоимость: ${upgrade.cost}</div>
+        <div class="upgrade-cost">Стоимость: ${upgrade.cost}</div>
       </div>
-      <button ${caps >= upgrade.cost && !isUpgradeLocked(upgrade) ? '' : 'disabled'}>Купить</button>
+      <button ${caps >= upgrade.cost && !locked ? '' : 'disabled'}>Купить</button>
     `;
     const conditionEl = div.querySelector('.upgrade-condition');
-    conditionEl.style.display = 'none';
-    div.addEventListener('click', () => {
-      if (conditionEl.style.display === 'none') {
-        conditionEl.style.display = 'block';
-      } else {
-        conditionEl.style.display = 'none';
+    conditionEl.style.display = 'none'; // Скрыто по умолчанию
+    div.addEventListener('click', (e) => {
+      if (e.target.tagName !== 'BUTTON') {
+        conditionEl.style.display = conditionEl.style.display === 'none' ? 'block' : 'none';
       }
     });
     div.querySelector('button').onclick = (e) => {
