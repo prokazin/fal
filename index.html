@@ -2,36 +2,33 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Caps Clicker: Пустошь ждёт</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h1>Caps Clicker: Пустошь ждёт</h1>
+    <h1>Caps Clicker</h1>
     <div class="stats">
       <div>Капсы: <span id="caps">0</span></div>
-      <div>Капсы в секунду: <span id="cps">0.0</span></div>
+      <div>Капсы/сек: <span id="cps">0.0</span></div>
       <div>Радиация: <span id="radiation">0%</span></div>
     </div>
 
     <button id="clickButton" class="big-button">
-      <img src="https://via.placeholder.com/150?text=Nuka-Cola" alt="Nuka-Cola Bottle" class="click-image">
-      <div>Кликни за капсы!</div>
+      <img src="https://via.placeholder.com/200?text=Nuka-Cola" alt="Nuka-Cola" class="click-image">
+      <div class="click-text">Клик!</div>
     </button>
 
-    <div class="buildings-section">
-      <h2>Здания и улучшения</h2>
-      <div id="buildings"></div>
+    <div class="tabs">
+      <button class="tab-button active" data-tab="buildings">Здания</button>
+      <button class="tab-button" data-tab="upgrades">Улучшения</button>
     </div>
 
-    <div class="events-section">
-      <h2>События в Пустоши</h2>
-      <div id="eventLog"></div>
-    </div>
+    <div id="buildings" class="tab-content active"></div>
+    <div id="upgrades" class="tab-content"></div>
 
-    <button id="saveButton">Сохранить прогресс</button>
-    <button id="resetButton">Сбросить игру</button>
+    <div id="notification" class="notification"></div>
   </div>
 
   <script src="script.js"></script>
